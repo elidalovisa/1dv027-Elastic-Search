@@ -1,26 +1,70 @@
-# Assignment WT - Big Data
+# Getting Started with Create React App
 
-As developers, we often face challenges handling large amounts of data where runtime execution or ordinary databases do not meet the requirements.
-We might also have APIs with basic CRUD operations where we might want to query, aggregate, and visualize the data in other ways than the API intended. This is where the query engine Elasticsearch comes into play. Elasticsearch should not be seen as a database, but as a query engine. The data in Elasticsearch should always be replaceable and be able to be recreated.
-Elasticsearch and similar query engines allow developers to create indexes from data and use the data in new ways that usually would have taken significant rewriting of applications.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## The assignment
+## Available Scripts
 
-Find a bigger _dataset_ and visualize something that you find interesting from the dataset. The visualization should be presented in a publicly reachable web application in the form of a diagram.
+In the project directory, you can run:
 
-You can find datasets at https://www.kaggle.com/datasets, but you are free to explore and find something else.
+### `npm start`
 
-It is recommended that you develop in the following steps:
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-1) Browse around to find a dataset
-2) Write an application that gathers the data needed from the API and saves it in Elasticsearch
-3) Use Kibana to find an interesting visualization
-4) Write a web application with the visualization (#11)
-5) Deploy the web application (#7)
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## Requirements
+### `npm test`
 
-Make sure to read [all requirements of the application](../../issues/). This includes: (#1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #11)
-Pay extra attention to the labels indicating if the requirement is required (~"req::required") or optional (~"req::optional").
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-In this assignment, you must close issues and tasks ([ ]) that you implement. You must also create your issues (and close them) if you add any functionality.
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
