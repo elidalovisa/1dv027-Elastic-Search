@@ -9,20 +9,23 @@ import utf8 from 'utf8'
 //https://sxr5w7jebl:ihql44kfcj@apple-279251793.eu-west-1.bonsaisearch.net:443
 function App() {
 
-  const getData = async () => {
-    const test = utf8.encode(process.env.REACT_APP_USERNAME + ':' + process.env.REACT_APP_PASSWORD)
-    const credentials = base64.encode(test)
-    const response = await fetch(process.env.REACT_APP_BONSAI_URL + '/argentina', {
+  const getProvince= async () => {
+    const body = {
+      fields: ['province']
+    }
+    const credUtf = utf8.encode(process.env.REACT_APP_USERNAME + ':' + process.env.REACT_APP_PASSWORD)
+    const credentials = base64.encode(credUtf)
+    const response = await fetch(process.env.REACT_APP_BONSAI_URL + '/argentina/_search?size=50&q=*:*&filter_path=hits.hits._source.province', {
       method: 'GET',
       headers : { 
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Basic ' + credentials,
 
-       }})
-       console.log(response)
+       },
+    })
     const result = await response.json()
-    console.log(result)
+    console.log(result.hits.hits[0]._source.province)
 
   }
 /*  const connect = () => {
@@ -47,7 +50,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <button onClick={getData}></button>
+        <button onClick={getProvince}>Get province</button>
         <a
           className="App-link"
           href="https://reactjs.org"
