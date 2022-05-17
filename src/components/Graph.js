@@ -5,7 +5,6 @@ import base64 from 'base-64'
 import utf8 from 'utf8'
 
 const Graph = () => {
-
     const [data, setData] = useState([])
 
     // Fetch Data
@@ -38,34 +37,34 @@ const Graph = () => {
         return provinceArray
     }, [fetchData])
 
-        // Get gdb stat
-        const getGdp = useCallback(async () => {
-            const query = '/argentina/_search?size=50&q=*:*&filter_path=hits.hits._source.pop'
-            const result = await fetchData(query)
-            const resultArray = []
-            const gdpArray = []
-            resultArray.push(result.hits.hits)
-            for (let i = 0; i < resultArray[0].length; i++) {
-                gdpArray.push((parseFloat(resultArray[0][i]._source.pop)))
-            }
-            return gdpArray
-        }, [fetchData])
+    // Get gdb stat
+    const getIlliteracy = useCallback(async () => {
+        const query = '/argentina/_search?size=50&q=*:*&filter_path=hits.hits._source.illiteracy'
+        const result = await fetchData(query)
+        const resultArray = []
+        const gdpArray = []
+        resultArray.push(result.hits.hits)
+        for (let i = 0; i < resultArray[0].length; i++) {
+            gdpArray.push((parseFloat(resultArray[0][i]._source.illiteracy)))
+        }
+        return gdpArray
+    }, [fetchData])
 
     // Get poverty stat
-    const getPoverty = useCallback( async () => {
+    const getPoverty = useCallback(async () => {
         const query = '/argentina/_search?size=50&q=*:*&filter_path=hits.hits._source.poverty'
         const result = await fetchData(query)
         const resultArray = []
         const povertyArray = []
         resultArray.push(result.hits.hits)
         for (let i = 0; i < resultArray[0].length; i++) {
-           povertyArray.push((parseInt(resultArray[0][i]._source.poverty)))
+            povertyArray.push((parseFloat(resultArray[0][i]._source.poverty)))
         }
         return povertyArray
     }, [fetchData])
 
     // Get birh mortality stat
-    const getBirthMortality = useCallback( async () => {
+    const getBirthMortality = useCallback(async () => {
         const query = '/argentina/_search?size=50&q=*:*&filter_path=hits.hits._source.birth_mortal'
         const result = await fetchData(query)
         const resultArray = []
@@ -82,33 +81,55 @@ const Graph = () => {
         const province = await getProvinces()
         const poverty = await getPoverty()
         const birthMortality = await getBirthMortality()
+        const doctorsPerCap = await getIlliteracy()
         const dataArray = []
-        const columns = ['Province', 'Poverty', 'Birth Mortality']
+        const columns = ['Province', 'Poverty', 'Birth Mortality', 'Illiteracy']
         dataArray.push(columns)
         for (var i = 0; i < province.length; i++) {
             var temp = [];
             temp.push(province[i])
             temp.push(poverty[i])
             temp.push(birthMortality[i])
+            temp.push(doctorsPerCap[i])
             dataArray.push(temp);
         }
         setData(dataArray)
 
-    }, [getProvinces, getPoverty, getBirthMortality])
+    }, [getProvinces, getPoverty, getBirthMortality, getIlliteracy])
 
+    const options = /*{
+        width: 1500,
+        chart: {
+            title: "Data over Argentinian provinces",
+        },
+        bars: 'horizontal', // Required for Material Bar Charts.
+        series: {
+            0: { axis: 'Province' }, // Bind series 0 to an axis named 
+            1: { axis: 'Population' } // Bind series 1 to an axis named 
+        },
+        axes: {
+            x: {
+                Population: { label: 'population' }, // Bottom x-axis.
+                Province: { side: 'bottom', label: 'province' } // Top x-axis.
+            }
+        }
+    };*/{
 
-    const options = {
-        title: "Data over Argentinian provinces",
-        chartArea: { width: "70%" },
-        legend: {position: 'top', maxLines: 5},
-        curveType: "function",
+        title: "Data over Argentinian provinces in %",
+        chartArea: { width: "80%" },
+        legend: { position: 'top', maxLines: 3 },
+        bar: { groupWidth: '75%' },
+        isStacked: true,
+       // legend: { position: 'top' },
+        // isStacked: true,
 
         hAxis: {
             title: "Province",
             minValue: 0,
         },
         vAxis: {
-            title: "Poverty",
+            title: "Total amount of data",
+
         },
         backgroundColor: '#E4E4E4',
 
@@ -116,16 +137,15 @@ const Graph = () => {
 
     useEffect(() => {
         getData()
-    },[getData])
+    }, [getData])
 
 
     return (
         <div>
-            {console.log(data)}
             <Chart
                 chartType="ColumnChart"
-                width="1500px"
-                height="1000px"
+                width="700px"
+                height="700px"
                 data={data}
                 options={options}
             />
