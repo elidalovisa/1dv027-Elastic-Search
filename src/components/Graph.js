@@ -38,6 +38,18 @@ const Graph = () => {
         return provinceArray
     }, [fetchData])
 
+        // Get gdb stat
+        const getGdp = useCallback(async () => {
+            const query = '/argentina/_search?size=50&q=*:*&filter_path=hits.hits._source.pop'
+            const result = await fetchData(query)
+            const resultArray = []
+            const gdpArray = []
+            resultArray.push(result.hits.hits)
+            for (let i = 0; i < resultArray[0].length; i++) {
+                gdpArray.push((parseFloat(resultArray[0][i]._source.pop)))
+            }
+            return gdpArray
+        }, [fetchData])
 
     // Get poverty stat
     const getPoverty = useCallback( async () => {
@@ -47,7 +59,7 @@ const Graph = () => {
         const povertyArray = []
         resultArray.push(result.hits.hits)
         for (let i = 0; i < resultArray[0].length; i++) {
-           povertyArray.push((parseFloat(resultArray[0][i]._source.poverty)))
+           povertyArray.push((parseInt(resultArray[0][i]._source.poverty)))
         }
         return povertyArray
     }, [fetchData])
@@ -70,12 +82,9 @@ const Graph = () => {
         const province = await getProvinces()
         const poverty = await getPoverty()
         const birthMortality = await getBirthMortality()
-        //await getPoverty()
-        //await getBirthMortality()
         const dataArray = []
         const columns = ['Province', 'Poverty', 'Birth Mortality']
         dataArray.push(columns)
-        console.log(province)
         for (var i = 0; i < province.length; i++) {
             var temp = [];
             temp.push(province[i])
@@ -89,17 +98,22 @@ const Graph = () => {
 
 
     const options = {
-        title: "Population of Largest U.S. Cities",
-        chartArea: { width: "50%" },
+        title: "Data over Argentinian provinces",
+        chartArea: { width: "70%" },
+        legend: {position: 'top', maxLines: 5},
+        curveType: "function",
+
         hAxis: {
-            title: "Total Poverty",
+            title: "Province",
             minValue: 0,
         },
         vAxis: {
-            title: "City",
+            title: "Poverty",
         },
+        backgroundColor: '#E4E4E4',
+
     }
-    
+
     useEffect(() => {
         getData()
     },[getData])
@@ -107,10 +121,11 @@ const Graph = () => {
 
     return (
         <div>
+            {console.log(data)}
             <Chart
-                chartType="BarChart"
-                width="100%"
-                height="400px"
+                chartType="ColumnChart"
+                width="1500px"
+                height="1000px"
                 data={data}
                 options={options}
             />
