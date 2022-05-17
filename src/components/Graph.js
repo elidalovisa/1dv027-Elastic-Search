@@ -3,11 +3,18 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Chart } from "react-google-charts";
 import base64 from 'base-64'
 import utf8 from 'utf8'
-
+/**
+ * Component for collecting and rendering a graphic visualization of data.
+ *
+ */
 const Graph = () => {
     const [data, setData] = useState([])
 
-    // Fetch Data
+    /**
+     * Makes a fetch request to collect data.
+     * @param {string} query - Query for the url.
+     * @return {array} - Returns array with data.
+     */
     const fetchData = useCallback(async (query) => {
         const credUtf = utf8.encode(process.env.REACT_APP_USERNAME + ':' + process.env.REACT_APP_PASSWORD)
         const credentials = base64.encode(credUtf)
@@ -24,7 +31,11 @@ const Graph = () => {
     }, [])
 
 
-    // Get all provinces
+    /**
+     * Makes a fetch request to collect province data.
+     * 
+     * @return {array} - Returns array with data.
+     */
     const getProvinces = useCallback(async () => {
         const query = '/argentina/_search?size=50&q=*:*&filter_path=hits.hits._source.province'
         const result = await fetchData(query)
@@ -37,7 +48,11 @@ const Graph = () => {
         return provinceArray
     }, [fetchData])
 
-    // Get illiteracy stat
+    /**
+     * Makes a fetch request to collect illiteracy data.
+     * 
+     * @return {array} - Returns array with data.
+     */
     const getIlliteracy = useCallback(async () => {
         const query = '/argentina/_search?size=50&q=*:*&filter_path=hits.hits._source.illiteracy'
         const result = await fetchData(query)
@@ -50,7 +65,11 @@ const Graph = () => {
         return gdpArray
     }, [fetchData])
 
-    // Get poverty stat
+    /**
+     * Makes a fetch request to collect poverty data.
+     * 
+     * @return {array} - Returns array with data.
+     */
     const getPoverty = useCallback(async () => {
         const query = '/argentina/_search?size=50&q=*:*&filter_path=hits.hits._source.poverty'
         const result = await fetchData(query)
@@ -63,7 +82,11 @@ const Graph = () => {
         return povertyArray
     }, [fetchData])
 
-    // Get birh mortality stat
+    /**
+     * Makes a fetch request to collect birth mortality data.
+     * 
+     * @return {array} - Returns array with data.
+     */
     const getBirthMortality = useCallback(async () => {
         const query = '/argentina/_search?size=50&q=*:*&filter_path=hits.hits._source.birth_mortal'
         const result = await fetchData(query)
@@ -76,7 +99,12 @@ const Graph = () => {
         return birthMortalityArray
     }, [fetchData])
 
-    // Code inspiration: https://stackoverflow.com/questions/28165195/how-to-dynamically-add-row-to-google-chart-with-for-loop
+    /**
+     * Fetch all data needed to create the graph.
+     * 
+     * @see - Loop inspired from: {@link https://stackoverflow.com/questions/28165195/how-to-dynamically-add-row-to-google-chart-with-for-loop }
+     * @return {array} - Returns array with data.
+     */
     const getData = useCallback(async () => {
         const province = await getProvinces()
         const poverty = await getPoverty()
@@ -98,7 +126,6 @@ const Graph = () => {
     }, [getProvinces, getPoverty, getBirthMortality, getIlliteracy])
 
     const options = {
-
         title: "Data over Argentinian provinces in %",
         chartArea: { width: "80%" },
         legend: { position: 'top', maxLines: 3 },
