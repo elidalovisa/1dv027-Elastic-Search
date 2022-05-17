@@ -37,7 +37,7 @@ const Graph = () => {
         return provinceArray
     }, [fetchData])
 
-    // Get gdb stat
+    // Get illiteracy stat
     const getIlliteracy = useCallback(async () => {
         const query = '/argentina/_search?size=50&q=*:*&filter_path=hits.hits._source.illiteracy'
         const result = await fetchData(query)
@@ -97,32 +97,13 @@ const Graph = () => {
 
     }, [getProvinces, getPoverty, getBirthMortality, getIlliteracy])
 
-    const options = /*{
-        width: 1500,
-        chart: {
-            title: "Data over Argentinian provinces",
-        },
-        bars: 'horizontal', // Required for Material Bar Charts.
-        series: {
-            0: { axis: 'Province' }, // Bind series 0 to an axis named 
-            1: { axis: 'Population' } // Bind series 1 to an axis named 
-        },
-        axes: {
-            x: {
-                Population: { label: 'population' }, // Bottom x-axis.
-                Province: { side: 'bottom', label: 'province' } // Top x-axis.
-            }
-        }
-    };*/{
+    const options = {
 
         title: "Data over Argentinian provinces in %",
         chartArea: { width: "80%" },
         legend: { position: 'top', maxLines: 3 },
         bar: { groupWidth: '75%' },
         isStacked: true,
-       // legend: { position: 'top' },
-        // isStacked: true,
-
         hAxis: {
             title: "Province",
             minValue: 0,
