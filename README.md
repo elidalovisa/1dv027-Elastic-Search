@@ -1,4 +1,7 @@
-# Assignment WT - Big Data
+This application was a project I made as a part of my studies at Linnaeus University.
+
+# The assignment description
+## Assignment WT - Big Data
 
 As developers, we often face challenges handling large amounts of data where runtime execution or ordinary databases do not meet the requirements.
 We might also have APIs with basic CRUD operations where we might want to query, aggregate, and visualize the data in other ways than the API intended. This is where the query engine Elasticsearch comes into play. Elasticsearch should not be seen as a database, but as a query engine. The data in Elasticsearch should always be replaceable and be able to be recreated.
